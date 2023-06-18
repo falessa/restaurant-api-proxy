@@ -7,6 +7,7 @@ export const ServiceTypeDefs = gql`
     text: String
     time_created: String
     user: User
+    url: String
   }
 
   type User {
@@ -43,6 +44,7 @@ export const ServiceTypeDefs = gql`
   }
 
   type Query {
-    searchBusinesses(term: String!, location: String!): [Business]
+    searchBusinesses(term: String!, location: String!): [Business],
+    reviews(business: String!): [Review]
   }
 `;
