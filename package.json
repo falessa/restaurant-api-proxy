@@ -1,7 +1,7 @@
 {
   "name": "restaurant-api-proxy",
   "version": "1.0.0",
-  "description": "API proxt for the restaurants-catalog app",
+  "description": "API proxy for the restaurants-catalog app",
   "main": "index.js",
   "scripts": {
     "start": "node 'dist/server.js'",
