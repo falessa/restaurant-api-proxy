@@ -43,8 +43,13 @@ export const ServiceTypeDefs = gql`
     is_open_now: Boolean
   }
 
+  type SearchBusinesses {
+    businesses: [Business],
+    total: Int
+  }
+
   type Query {
-    searchBusinesses(term: String!, location: String!): [Business],
+    searchBusinesses(term: String!, location: String!, offset: Int, limit: Int): SearchBusinesses,
     reviews(business: String!): [Review]
   }
 `;

@@ -16,12 +16,13 @@ async function makeRequest(url: string, body: string, token: string) {
 
 export const ServiceResolvers = {
     Query: {
-        searchBusinesses: async (_: any, { term, location }: any, { token }: any) => {
+        searchBusinesses: async (_: any, { term, location, offset, limit }: any, { token }: any) => {
             const url = `https://api.yelp.com/v3/graphql`;
             const body = JSON.stringify({
                 query: `
-                    query SearchBusinesses($term: String!, $location: String!) {
-                        search(term: $term, location: $location) {
+                    query SearchBusinesses($term: String!, $location: String!, $offset: Int, $limit: Int) {
+                        search(term: $term, location: $location, offset: $offset, limit: $limit) {
+                            total
                             business {
                                 id
                                 name
@@ -55,12 +56,15 @@ export const ServiceResolvers = {
                         }
                     }
                 `,
-                variables: { term, location },
+                variables: { term, location, offset, limit },
             });
 
             const response = await makeRequest(url, body, token);
 
-            return response.search.business;
+            return {
+                businesses: response.search.business,
+                total: response.search.total
+            };
         },
 
         reviews: async (_: any, { business }: any, { token }: any) => {
